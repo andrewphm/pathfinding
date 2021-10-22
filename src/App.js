@@ -2,12 +2,12 @@ import React from "react";
 
 // Components
 import Grid from "./components/Grid";
-// import Header from "./components/";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div id="main">
-      {/* <Header /> */}
+      <Header />
       <Grid />
     </div>
   );

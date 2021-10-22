@@ -8,8 +8,8 @@ const defaultState = {
 };
 
 const Grid = () => {
-  let row = 10;
-  let col = 10;
+  let row = 25;
+  let col = 25;
   let root = document.getElementById("root");
   root.style.setProperty("--grid-rows", row);
   root.style.setProperty("--grid-columns", col);
