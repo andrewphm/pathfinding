@@ -27,9 +27,10 @@ const Grid = () => {
     <div id="container">
       {grid.map((e, index) => {
         return (
-          <div key={index} className={`grid-item row-${e[0]} col-${e[1]}`}>
-            Row: {e[0]} Col: {e[1]}
-          </div>
+          <div
+            key={index}
+            className={`grid-item row-${e[0]} col-${e[1]}`}
+          ></div>
         );
       })}
     </div>
