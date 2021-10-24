@@ -34,13 +34,6 @@ const Grid = () => {
   root.style.setProperty("--grid-columns", col);
 
   const reducer = (state, action) => {
-    if (action.type === "SET_TARGET") {
-      console.log("reducer firing");
-      let randIndex = Math.floor(Math.random() * action.payload);
-      state[randIndex].isTarget = true;
-      console.log(state[randIndex]);
-      return state;
-    }
     if (action.type === "MOUSEDOWN") {
       console.log("reducer firing");
       state.isMouseDown = true;
@@ -57,6 +50,7 @@ const Grid = () => {
 
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
 
+  /* Mouse event handlers */
   const handleMouseDown = (target) => {
     if (
       !target.classList.contains("target") &&
@@ -66,24 +60,25 @@ const Grid = () => {
       target.classList.add("wall");
     }
   };
-
   const handleMouseEnter = (target) => {
     if (state.isMouseDown) {
       if (
         !target.classList.contains("target") &&
-        !target.classList.contains("start")
+        !target.classList.contains("start") &&
+        target !== document.getElementById("container")
       ) {
         target.classList.add("wall");
       }
     }
   };
-  const handleMouseUp = (target) => {
-    if (
-      !target.classList.contains("target") &&
-      !target.classList.contains("start")
-    ) {
-      dispatch({ type: "MOUSEUP" });
-      target.classList.add("wall");
+
+  /* clear walls */
+  const clearWalls = (row, col) => {
+    for (let x = 0; x < row; x++) {
+      for (let y = 0; y < col; y++) {
+        let node = document.getElementById(`node-${x}-${y}`);
+        node.classList.remove("wall");
+      }
     }
   };
 
@@ -97,11 +92,8 @@ const Grid = () => {
         handleMouseEnter(event.target);
         // console.log(event.target);
       }}
-      onMouseUp={(event) => {
-        handleMouseUp(event.target);
-      }}
+      onMouseUp={() => dispatch({ type: "MOUSEUP" })}
     >
-      {console.log(state)}
       {state.nodes.map((e, index) => {
         const { row, col, isTarget, isStart } = e;
         let className = "";
@@ -119,6 +111,14 @@ const Grid = () => {
         );
       })}
       {console.log("rendered")}
+      <button
+        className="btn"
+        onClick={() => {
+          clearWalls(row, col);
+        }}
+      >
+        Button
+      </button>
     </div>
   );
 };
