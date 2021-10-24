@@ -97,6 +97,14 @@ nav {
   width: 25px;
 }
 
+.start {
+  background-color: green;
+}
+
 .target {
   background-color: red;
+}
+
+.wall {
+  background-color: var(--clr-primary-1);
 }
