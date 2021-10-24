@@ -89,8 +89,14 @@ nav {
   height: fit-content;
 }
 
+/* Node */
+
 .grid-item {
   border: 1px solid #ddd;
   height: 25px;
   width: 25px;
+}
+
+.target {
+  background-color: red;
 }

@@ -1,21 +1,10 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer, useEffect } from "react";
 
 // Reducer
-import { reducer } from "../../utility/reducer";
+// import { reducer } from "../../utility/reducer";
 
 const Grid = () => {
   // Set up state management for nodes
-
-  const reducer = (state, action) => {
-    if (action.type === "ADD_NODE") {
-      let newNodes = [...state.nodes, action.payload];
-
-      return {
-        ...state,
-        nodes: newNodes,
-      };
-    }
-  };
 
   let row = 25;
   let col = 25;
@@ -24,6 +13,7 @@ const Grid = () => {
   root.style.setProperty("--grid-columns", col);
 
   const defaultState = [];
+
   for (let x = 0; x < row; x++) {
     for (let y = 0; y < col; y++) {
       const node = {
@@ -37,17 +27,38 @@ const Grid = () => {
     }
   }
 
+  const reducer = (state, action) => {
+    if (action.type === "SET_TARGET") {
+      console.log("reducer firing");
+      console.log(state);
+      let randNum = Math.floor(Math.random() * action.payload);
+      console.log(randNum);
+      let newState = state.filter((node, index) => index !== randNum);
+      console.log(newState);
+      return newState;
+    }
+  };
+
   const [state, dispatch] = useReducer(reducer, defaultState);
-  console.log(state);
+
+  useEffect(() => {
+    let totalNodes = row * col;
+    dispatch({ type: "SET_TARGET", payload: totalNodes });
+    console.log("useEffect firing");
+  }, []);
 
   return (
     <div id="container">
-      {defaultState.map((e, index) => {
-        const { row, col } = e;
+      {state.map((e, index) => {
+        const { row, col, className } = e;
         return (
-          <div key={index} className={`grid-item row-${row} col-${col}`}></div>
+          <div
+            key={index}
+            className={`grid-item row-${row} col-${col} ${className}`}
+          ></div>
         );
       })}
+      {console.log("rendered")}
     </div>
   );
 };
