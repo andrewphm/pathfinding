@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 
 // Reducer
 // import { reducer } from "../../utility/reducer";
@@ -10,7 +10,7 @@ const Grid = () => {
   // Set up state management for nodes
 
   const initialGridArr = (row, col) => {
-    const defaultState = [];
+    const defaultState = { nodes: [], isMouseDown: false };
     for (let x = 0; x < row; x++) {
       for (let y = 0; y < col; y++) {
         const node = {
@@ -20,13 +20,12 @@ const Grid = () => {
           isStart: false,
           isTarget: false,
         };
-        defaultState.push(node);
+        defaultState.nodes.push(node);
       }
     }
-    const randIndex = Math.floor(Math.random() * (row * col));
-    const randIndex2 = Math.floor(Math.random() * (row * col));
-    defaultState[defaultState.length - 1].isTarget = true;
-    defaultState[0].isStart = true;
+
+    defaultState.nodes[defaultState.nodes.length - 1].isTarget = true;
+    defaultState.nodes[0].isStart = true;
     return defaultState;
   };
 
@@ -42,6 +41,18 @@ const Grid = () => {
       console.log(state[randIndex]);
       return state;
     }
+    if (action.type === "MOUSEDOWN") {
+      console.log("reducer firing");
+      state.isMouseDown = true;
+      console.log(state);
+      return state;
+    }
+    if (action.type === "MOUSEUP") {
+      console.log("reducer firing");
+      state.isMouseDown = false;
+      console.log(state);
+      return state;
+    }
   };
 
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
@@ -51,16 +62,27 @@ const Grid = () => {
       !target.classList.contains("target") &&
       !target.classList.contains("start")
     ) {
+      dispatch({ type: "MOUSEDOWN" });
       target.classList.add("wall");
     }
   };
 
-  const handleMouseEnter = (target) => {};
+  const handleMouseEnter = (target) => {
+    if (state.isMouseDown) {
+      if (
+        !target.classList.contains("target") &&
+        !target.classList.contains("start")
+      ) {
+        target.classList.add("wall");
+      }
+    }
+  };
   const handleMouseUp = (target) => {
     if (
       !target.classList.contains("target") &&
       !target.classList.contains("start")
     ) {
+      dispatch({ type: "MOUSEUP" });
       target.classList.add("wall");
     }
   };
@@ -70,18 +92,17 @@ const Grid = () => {
       id="container"
       onMouseDown={(event) => {
         handleMouseDown(event.target);
-        console.log(event.target);
       }}
-      onMouseEnter={(event) => {
+      onMouseOver={(event) => {
         handleMouseEnter(event.target);
-        console.log(event.target);
+        // console.log(event.target);
       }}
       onMouseUp={(event) => {
         handleMouseUp(event.target);
-        console.log(event.target);
       }}
     >
-      {state.map((e, index) => {
+      {console.log(state)}
+      {state.nodes.map((e, index) => {
         const { row, col, isTarget, isStart } = e;
         let className = "";
         if (isTarget) {
