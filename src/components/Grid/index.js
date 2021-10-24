@@ -1,5 +1,14 @@
 import React, { useReducer } from "react";
 
+/* clear walls */
+export const clearWalls = (row, col) => {
+  for (let x = 0; x < row; x++) {
+    for (let y = 0; y < col; y++) {
+      let node = document.getElementById(`node-${x}-${y}`);
+      node.classList.remove("wall");
+    }
+  }
+};
 // Reducer
 // import { reducer } from "../../utility/reducer";
 
@@ -72,16 +81,6 @@ const Grid = () => {
     }
   };
 
-  /* clear walls */
-  const clearWalls = (row, col) => {
-    for (let x = 0; x < row; x++) {
-      for (let y = 0; y < col; y++) {
-        let node = document.getElementById(`node-${x}-${y}`);
-        node.classList.remove("wall");
-      }
-    }
-  };
-
   return (
     <div
       id="container"
@@ -111,14 +110,6 @@ const Grid = () => {
         );
       })}
       {console.log("rendered")}
-      <button
-        className="btn"
-        onClick={() => {
-          clearWalls(row, col);
-        }}
-      >
-        Button
-      </button>
     </div>
   );
 };
