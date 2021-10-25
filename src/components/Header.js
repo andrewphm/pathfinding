@@ -1,22 +1,21 @@
 import React from "react";
 
-import { clearWalls } from "./Grid/index";
-
 const Header = () => {
   return (
     <header>
       <h1 className="title">Pathfinding Visualizer</h1>
-      <nav>
-        <button className="btn">Visualize!</button>
-        <button
-          onClick={() => {
-            clearWalls(20, 20);
-          }}
-          className="btn"
+      <div className="links">
+        <a
+          target="_blank"
+          href="https://github.com/andrewphm/pathfinding"
+          rel="noreferrer"
         >
-          Remove Walls
-        </button>
-      </nav>
+          <i class="fab fa-github fa-lg"></i>
+        </a>
+        <a target="_blank" href="https://andrewpham.ca" rel="noreferrer">
+          <i class="fas fa-user-circle fa-lg"></i>
+        </a>
+      </div>
     </header>
   );
 };

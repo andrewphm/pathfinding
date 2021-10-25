@@ -13,7 +13,7 @@ export const clearWalls = (row, col) => {
 // import { reducer } from "../../utility/reducer";
 
 let row = 20;
-let col = 20;
+let col = 35;
 
 const Grid = () => {
   // Set up state management for nodes
@@ -74,7 +74,7 @@ const Grid = () => {
       if (
         !target.classList.contains("target") &&
         !target.classList.contains("start") &&
-        target !== document.getElementById("container")
+        target !== document.getElementById("grid")
       ) {
         target.classList.add("wall");
       }
@@ -82,34 +82,46 @@ const Grid = () => {
   };
 
   return (
-    <div
-      id="container"
-      onMouseDown={(event) => {
-        handleMouseDown(event.target);
-      }}
-      onMouseOver={(event) => {
-        handleMouseEnter(event.target);
-        // console.log(event.target);
-      }}
-      onMouseUp={() => dispatch({ type: "MOUSEUP" })}
-    >
-      {state.nodes.map((e, index) => {
-        const { row, col, isTarget, isStart } = e;
-        let className = "";
-        if (isTarget) {
-          className = "target";
-        } else if (isStart) {
-          className = "start";
-        }
-        return (
-          <div
-            id={`node-${row}-${col}`}
-            key={index}
-            className={`grid-item ${className}`}
-          ></div>
-        );
-      })}
-      {console.log("rendered")}
+    <div className="grid-container">
+      <div className="grid-buttons">
+        <button
+          className="grid-clear-btn btn"
+          onClick={() => {
+            clearWalls(row, col);
+          }}
+        >
+          Remove Walls
+        </button>
+      </div>
+      <div
+        id="grid"
+        onMouseDown={(event) => {
+          handleMouseDown(event.target);
+        }}
+        onMouseOver={(event) => {
+          handleMouseEnter(event.target);
+          // console.log(event.target);
+        }}
+        onMouseUp={() => dispatch({ type: "MOUSEUP" })}
+      >
+        {state.nodes.map((e, index) => {
+          const { row, col, isTarget, isStart } = e;
+          let className = "";
+          if (isTarget) {
+            className = "target";
+          } else if (isStart) {
+            className = "start";
+          }
+          return (
+            <div
+              id={`node-${row}-${col}`}
+              key={index}
+              className={`grid-item ${className}`}
+            ></div>
+          );
+        })}
+        {console.log("rendered")}
+      </div>
     </div>
   );
 };
