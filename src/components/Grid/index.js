@@ -82,17 +82,56 @@ const Grid = () => {
   };
 
   return (
-    <div className="grid-container">
-      <div className="grid-buttons">
+    <section className="grid-container">
+      <div className="grid-legend">
+        <div className="algo-menu">
+          <button className="btn">Choose an Algorithm</button>
+          <ul className="algo-list">
+            <li>Dijkstra's Algorithm</li>
+            <li>A* Search</li>
+            <li>Breadth-first Search</li>
+            <li>Depth-first search</li>
+            <li>Swarm Algoirthm</li>
+          </ul>
+        </div>
         <button
           className="grid-clear-btn btn"
           onClick={() => {
             clearWalls(row, col);
           }}
         >
-          Remove Walls
+          Clear Walls
         </button>
       </div>
+      <div>
+        <ul className="legend">
+          <li>
+            <i className={`ri-arrow-right-s-line ri-lg start`}></i>
+            <p> Start Node</p>
+          </li>
+          <li>
+            <i className={`ri-focus-2-line ri-lg target`}></i>
+            <p> Target Node</p>
+          </li>
+          <li>
+            <div className="unvisited-node"></div>
+            <p> Unvisited Nodes</p>
+          </li>
+          <li>
+            <div className="visited-node"></div>
+            <p> Visited Nodes</p>
+          </li>
+          <li>
+            <div className="shortest-path"></div>
+            <p> Shortest Path</p>
+          </li>
+          <li>
+            <div className="wall-node"></div>
+            <p> Wall nodes</p>
+          </li>
+        </ul>
+      </div>
+
       <div
         id="grid"
         onMouseDown={(event) => {
@@ -109,8 +148,26 @@ const Grid = () => {
           let className = "";
           if (isTarget) {
             className = "target";
+            return (
+              <div
+                id={`node-${row}-${col}`}
+                key={index}
+                className={`grid-item ${className}`}
+              >
+                <i className={`ri-focus-2-line ri-lg ${className}`}></i>
+              </div>
+            );
           } else if (isStart) {
             className = "start";
+            return (
+              <div
+                id={`node-${row}-${col}`}
+                key={index}
+                className={`grid-item ${className}`}
+              >
+                <i className={`ri-arrow-right-s-line ri-lg ${className}`}></i>
+              </div>
+            );
           }
           return (
             <div
@@ -122,7 +179,7 @@ const Grid = () => {
         })}
         {console.log("rendered")}
       </div>
-    </div>
+    </section>
   );
 };
 
