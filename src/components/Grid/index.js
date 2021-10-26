@@ -6,6 +6,7 @@ export const clearWalls = (row, col) => {
     for (let y = 0; y < col; y++) {
       let node = document.getElementById(`node-${x}-${y}`);
       node.classList.remove("wall");
+      node.classList.remove("visited");
     }
   }
 };
@@ -37,7 +38,6 @@ const Grid = () => {
         const node = {
           row: x,
           col: y,
-          isFilled: false,
           isStart: false,
           isTarget: false,
         };
@@ -82,8 +82,64 @@ const Grid = () => {
   const handleListClick = (event) => {
     const algoList = document.querySelector(".algo-list");
     algoList.classList.toggle("show-menu");
-    console.log(algoList);
     setAlgo(event.target.innerText);
+  };
+
+  const getNodeObject = (row, col) => {
+    let nodeObj = state.nodes.filter(
+      (node) => node.row === row && node.col === col
+    );
+    return nodeObj[0];
+  };
+
+  const dfs = () => {
+    const nodes = state.nodes;
+    let startNode = nodes.filter((node, index) => node.isStart === true);
+    startNode = startNode[0];
+    let stack = [startNode];
+
+    while (stack.length > 0) {
+      let currentNode = stack.pop();
+      let currentX = currentNode.row;
+      let currentY = currentNode.col;
+      //get
+      let currentNodeDom = document.getElementById(
+        `node-${currentX}-${currentY}`
+      );
+      console.log(currentNodeDom);
+
+      // Check to see if current node is target
+      // Marks current node as visited
+      if (currentNodeDom.classList.contains("target")) return;
+      if (!currentNodeDom.classList.contains("start"))
+        currentNodeDom.classList.add("visited");
+
+      // Directional Vectors left down right up
+      const rowVectors = [0, 1, 0, -1];
+      const colVectors = [-1, 0, 1, 0];
+
+      // Validate neighbour nodes
+      for (let i = 0; i < 4; i++) {
+        let xCord = currentX + rowVectors[i];
+        let yCord = currentY + colVectors[i];
+        console.log(xCord, yCord, stack);
+        // Validate node is inbound
+        if (xCord >= 0 && xCord < row && yCord >= 0 && yCord < col) {
+          let nextNode = document.getElementById(`node-${xCord}-${yCord}`);
+          let classes = nextNode.classList;
+          // Validate node is not a wall and hasn't been visited
+          let isVisited = classes.contains("visited");
+          let isWall = classes.contains("wall");
+          if (!isVisited && !isWall) {
+            let nodeObj = getNodeObject(xCord, yCord);
+            stack.push(nodeObj);
+            console.log("valid neighbour node pushed");
+          }
+        } else {
+          console.log("invalid cords");
+        }
+      }
+    }
   };
 
   return (
@@ -97,7 +153,7 @@ const Grid = () => {
               algoList.classList.toggle("show-menu");
             }}
           >
-            Algorithms...{" "}
+            Choose Algorithm...{" "}
             <i className="ri-arrow-down-s-fill ri-lg algo-icon"></i>
           </button>
           <ul className="algo-list">
@@ -114,7 +170,9 @@ const Grid = () => {
             <li onClick={(event) => handleListClick(event)}>Swarm Algoirthm</li>
           </ul>
         </div>
-        <button className="btn visualize-btn">Visualize {algo}!</button>
+        <button onClick={() => dfs()} className="btn visualize-btn">
+          Visualize {algo}!
+        </button>
         <button
           className="clear-btn btn"
           onClick={() => {

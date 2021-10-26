@@ -243,3 +243,6 @@ nav {
 .wall {
   background-color: var(--clr-primary-1);
 }
+.visited {
+  background-color: var(--clr-orange-7);
+}
