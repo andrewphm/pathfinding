@@ -83,9 +83,11 @@ const Grid = () => {
 
   return (
     <section className="grid-container">
-      <div className="grid-legend">
+      <div className="grid-buttons">
         <div className="algo-menu">
-          <button className="btn">Choose an Algorithm</button>
+          <button className="btn">
+            Algorithms... <i class="ri-arrow-down-s-fill ri-lg algo-icon"></i>
+          </button>
           <ul className="algo-list">
             <li>Dijkstra's Algorithm</li>
             <li>A* Search</li>
@@ -94,8 +96,9 @@ const Grid = () => {
             <li>Swarm Algoirthm</li>
           </ul>
         </div>
+        <button className="btn visualize-btn">Visualize!</button>
         <button
-          className="grid-clear-btn btn"
+          className="clear-btn btn"
           onClick={() => {
             clearWalls(row, col);
           }}
