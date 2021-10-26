@@ -106,10 +106,6 @@ header {
   color: var(--clr-grey-9);
 }
 
-.links a:hover {
-  color: var(--clr-grey-5);
-}
-
 nav {
   display: flex;
 }
@@ -141,9 +137,6 @@ nav {
 .grid-buttons {
   display: flex;
 }
-.algo-menu:hover .algo-list {
-  display: block;
-}
 .algo-list {
   display: none;
   position: absolute;
@@ -151,6 +144,7 @@ nav {
   background-color: var(--clr-primary-4);
   transition: var(--transition);
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 0.5rem 0;
 }
 .algo-list li {
   color: white;
@@ -159,7 +153,10 @@ nav {
   cursor: pointer;
 }
 .algo-list li:hover {
-  background-color: var(--clr-grey-4);
+  background-color: var(--clr-primary-3);
+}
+.show-menu {
+  display: block;
 }
 
 /* Visualize button */

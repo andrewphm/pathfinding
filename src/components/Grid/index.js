@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 
 /* clear walls */
 export const clearWalls = (row, col) => {
@@ -15,9 +15,21 @@ export const clearWalls = (row, col) => {
 let row = 20;
 let col = 35;
 
+const reducer = (state, action) => {
+  if (action.type === "MOUSEDOWN") {
+    console.log("reducer firing");
+    state.isMouseDown = true;
+    return state;
+  }
+  if (action.type === "MOUSEUP") {
+    console.log("reducer firing");
+    state.isMouseDown = false;
+    return state;
+  }
+};
+
 const Grid = () => {
   // Set up state management for nodes
-
   const initialGridArr = (row, col) => {
     const defaultState = { nodes: [], isMouseDown: false };
     for (let x = 0; x < row; x++) {
@@ -42,22 +54,8 @@ const Grid = () => {
   root.style.setProperty("--grid-rows", row);
   root.style.setProperty("--grid-columns", col);
 
-  const reducer = (state, action) => {
-    if (action.type === "MOUSEDOWN") {
-      console.log("reducer firing");
-      state.isMouseDown = true;
-      console.log(state);
-      return state;
-    }
-    if (action.type === "MOUSEUP") {
-      console.log("reducer firing");
-      state.isMouseDown = false;
-      console.log(state);
-      return state;
-    }
-  };
-
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
+  const [algo, setAlgo] = useState("");
 
   /* Mouse event handlers */
   const handleMouseDown = (target) => {
@@ -81,22 +79,42 @@ const Grid = () => {
     }
   };
 
+  const handleListClick = (event) => {
+    const algoList = document.querySelector(".algo-list");
+    algoList.classList.toggle("show-menu");
+    console.log(algoList);
+    setAlgo(event.target.innerText);
+  };
+
   return (
     <section className="grid-container">
       <div className="grid-buttons">
         <div className="algo-menu">
-          <button className="btn">
-            Algorithms... <i class="ri-arrow-down-s-fill ri-lg algo-icon"></i>
+          <button
+            className="btn"
+            onClick={() => {
+              const algoList = document.querySelector(".algo-list");
+              algoList.classList.toggle("show-menu");
+            }}
+          >
+            Algorithms...{" "}
+            <i className="ri-arrow-down-s-fill ri-lg algo-icon"></i>
           </button>
           <ul className="algo-list">
-            <li>Dijkstra's Algorithm</li>
-            <li>A* Search</li>
-            <li>Breadth-first Search</li>
-            <li>Depth-first search</li>
-            <li>Swarm Algoirthm</li>
+            <li onClick={(event) => handleListClick(event)}>
+              Dijkstra's Algorithm
+            </li>
+            <li onClick={(event) => handleListClick(event)}>A* Search</li>
+            <li onClick={(event) => handleListClick(event)}>
+              Breadth-first Search
+            </li>
+            <li onClick={(event) => handleListClick(event)}>
+              Depth-first search
+            </li>
+            <li onClick={(event) => handleListClick(event)}>Swarm Algoirthm</li>
           </ul>
         </div>
-        <button className="btn visualize-btn">Visualize!</button>
+        <button className="btn visualize-btn">Visualize {algo}!</button>
         <button
           className="clear-btn btn"
           onClick={() => {

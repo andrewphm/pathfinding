@@ -10,10 +10,10 @@ const Header = () => {
           href="https://github.com/andrewphm/pathfinding"
           rel="noreferrer"
         >
-          <i class="ri-github-fill ri-lg"></i>
+          <i className="ri-github-fill ri-lg"></i>
         </a>
         <a target="_blank" href="https://andrewpham.ca" rel="noreferrer">
-          <i class="ri-user-fill ri-lg"></i>
+          <i className="ri-user-fill ri-lg"></i>
         </a>
       </div>
     </header>
