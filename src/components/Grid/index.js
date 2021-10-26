@@ -1,38 +1,17 @@
 import React, { useReducer, useState } from "react";
 
-/* clear walls */
-export const clearWalls = (row, col) => {
-  for (let x = 0; x < row; x++) {
-    for (let y = 0; y < col; y++) {
-      let node = document.getElementById(`node-${x}-${y}`);
-      node.classList.remove("wall");
-      node.classList.remove("visited");
-    }
-  }
-};
 // Reducer
-// import { reducer } from "../../utility/reducer";
+import { reducer } from "./reducer";
+
+/* clear walls */
 
 let row = 20;
 let col = 35;
 
-const reducer = (state, action) => {
-  if (action.type === "MOUSEDOWN") {
-    console.log("reducer firing");
-    state.isMouseDown = true;
-    return state;
-  }
-  if (action.type === "MOUSEUP") {
-    console.log("reducer firing");
-    state.isMouseDown = false;
-    return state;
-  }
-};
-
 const Grid = () => {
   // Set up state management for nodes
   const initialGridArr = (row, col) => {
-    const defaultState = { nodes: [], isMouseDown: false };
+    const defaultState = { nodes: [], isMouseDown: false, isRunning: false };
     for (let x = 0; x < row; x++) {
       for (let y = 0; y < col; y++) {
         const node = {
@@ -56,6 +35,18 @@ const Grid = () => {
 
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
   const [algo, setAlgo] = useState("");
+
+  const clearWalls = (row, col) => {
+    if (!state.isRunning) {
+      for (let x = 0; x < row; x++) {
+        for (let y = 0; y < col; y++) {
+          let node = document.getElementById(`node-${x}-${y}`);
+          node.classList.remove("wall");
+          node.classList.remove("visited");
+        }
+      }
+    }
+  };
 
   /* Mouse event handlers */
   const handleMouseDown = (target) => {
@@ -99,21 +90,22 @@ const Grid = () => {
     const nodes = state.nodes;
     let startNode = nodes.filter((node, index) => node.isStart === true);
     startNode = startNode[0];
-    let stack = [startNode];
+    const stack = [startNode];
 
     while (stack.length > 0) {
       let currentNode = stack.pop();
       let currentX = currentNode.row;
       let currentY = currentNode.col;
-      //get
       let currentNodeDom = document.getElementById(
         `node-${currentX}-${currentY}`
       );
-      console.log(currentNodeDom);
 
       // Check to see if current node is target
       // Marks current node as visited
-      if (currentNodeDom.classList.contains("target")) return;
+      if (currentNodeDom.classList.contains("target")) {
+        dispatch({ type: "IS_RUNNING", payload: false });
+        return;
+      }
       if (!currentNodeDom.classList.contains("start"))
         currentNodeDom.classList.add("visited");
 
@@ -123,26 +115,33 @@ const Grid = () => {
 
       // Validate neighbour nodes
       for (let i = 0; i < 4; i++) {
+        // Using timeout to slow down loop for better viewability
         await timeout(10);
         let xCord = currentX + rowVectors[i];
         let yCord = currentY + colVectors[i];
-        console.log(xCord, yCord, stack);
         // Validate node is inbound
         if (xCord >= 0 && xCord < row && yCord >= 0 && yCord < col) {
           let nextNode = document.getElementById(`node-${xCord}-${yCord}`);
           let classes = nextNode.classList;
-          // Validate node is not a wall and hasn't been visited
           let isVisited = classes.contains("visited");
           let isWall = classes.contains("wall");
+          // Validate node is not a wall and hasn't been visited
           if (!isVisited && !isWall) {
             let nodeObj = getNodeObject(xCord, yCord);
+            // Push neighbour node to stack
             stack.push(nodeObj);
-            console.log("valid neighbour node pushed");
           }
-        } else {
-          console.log("invalid cords");
         }
       }
+    }
+    // If target is not found, change state of isRunning
+    if (stack.length === 0) dispatch({ type: "IS_RUNNING" });
+  };
+
+  const handleVirtualize = (algo) => {
+    if (!state.isRunning && algo) {
+      dispatch({ type: "IS_RUNNING", payload: true });
+      dfs();
     }
   };
 
@@ -174,7 +173,10 @@ const Grid = () => {
             <li onClick={(event) => handleListClick(event)}>Swarm Algoirthm</li>
           </ul>
         </div>
-        <button onClick={() => dfs()} className="btn visualize-btn">
+        <button
+          onClick={() => handleVirtualize(algo)}
+          className="btn visualize-btn"
+        >
           Visualize {algo}!
         </button>
         <button
@@ -225,6 +227,11 @@ const Grid = () => {
           // console.log(event.target);
         }}
         onMouseUp={() => dispatch({ type: "MOUSEUP" })}
+        onMouseLeave={() => {
+          if (state.isMouseDown) {
+            dispatch({ type: "MOUSEUP" });
+          }
+        }}
       >
         {state.nodes.map((e, index) => {
           const { row, col, isTarget, isStart } = e;
@@ -260,7 +267,7 @@ const Grid = () => {
             ></div>
           );
         })}
-        {console.log("rendered")}
+        {console.log(state)}
       </div>
     </section>
   );
