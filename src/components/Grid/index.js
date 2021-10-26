@@ -92,7 +92,10 @@ const Grid = () => {
     return nodeObj[0];
   };
 
-  const dfs = () => {
+  const dfs = async () => {
+    const timeout = (time) =>
+      new Promise((resolve) => setTimeout(resolve, time));
+
     const nodes = state.nodes;
     let startNode = nodes.filter((node, index) => node.isStart === true);
     startNode = startNode[0];
@@ -120,6 +123,7 @@ const Grid = () => {
 
       // Validate neighbour nodes
       for (let i = 0; i < 4; i++) {
+        await timeout(10);
         let xCord = currentX + rowVectors[i];
         let yCord = currentY + colVectors[i];
         console.log(xCord, yCord, stack);
