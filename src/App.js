@@ -1,14 +1,13 @@
 import React from "react";
 
 // Components
-import Grid from "./components/Grid/";
-import Header from "./components/Header";
+
+import Home from "./components/Home";
 
 function App() {
   return (
     <div id="main">
-      <Header />
-      <Grid />
+      <Home />
     </div>
   );
 }
