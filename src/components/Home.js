@@ -15,7 +15,15 @@ const Home = () => {
 
   // Set up default state of nodes
   const initialGridArr = (row, col) => {
-    const defaultState = { nodes: [], isMouseDown: false, isRunning: false };
+    const defaultState = {
+      nodes: [],
+      isMouseDown: false,
+      isRunning: false,
+      startNodeIndex: 95,
+      targetNodeIndex: 760,
+      isMovingStart: false,
+      isMovingTarget: false,
+    };
     for (let x = 0; x < row; x++) {
       for (let y = 0; y < col; y++) {
         const node = {

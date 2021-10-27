@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 // Utility
-import { handleMouseDown, handleMouseEnter } from "../../utility";
+import {
+  handleMouseDown,
+  handleMouseEnter,
+  handleMouseLeave,
+  handleMouseUp,
+} from "../../utility";
 
 const Grid = ({ state, dispatch }) => {
   return (
@@ -42,25 +47,40 @@ const Grid = ({ state, dispatch }) => {
         }}
         onMouseOver={(event) => {
           handleMouseEnter(event.target, state);
-          // console.log(event.target);
         }}
-        onMouseUp={() => dispatch({ type: "MOUSEUP" })}
-        onMouseLeave={() => {
-          if (state.isMouseDown) {
-            dispatch({ type: "MOUSEUP" });
-          }
-        }}
+        onMouseUp={() => handleMouseUp(dispatch, state)}
       >
         {state.nodes.map((e, index) => {
           const { row, col } = e;
           let className = "";
-          if (index === 95) className = "start";
-          if (index === 760) className = "target";
+          if (index === state.startNodeIndex) {
+            className = "start";
+            return (
+              <div
+                onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
+                id={`node-${row}-${col}`}
+                key={index}
+                className={`grid-item ${className}`}
+              ></div>
+            );
+          }
+          if (index === state.targetNodeIndex) {
+            className = "target";
+            return (
+              <div
+                onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
+                id={`node-${row}-${col}`}
+                key={index}
+                className={`grid-item ${className}`}
+              ></div>
+            );
+          }
           return (
             <div
+              onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
               id={`node-${row}-${col}`}
               key={index}
-              className={`grid-item ${className}`}
+              className={`grid-item`}
             ></div>
           );
         })}

@@ -18,20 +18,48 @@ export const handleMouseDown = (target, dispatch) => {
     !target.classList.contains("target") &&
     !target.classList.contains("start")
   ) {
-    dispatch({ type: "MOUSEDOWN" });
+    dispatch({ type: "BUILDING_WALL", payload: true });
     target.classList.add("wall");
   }
+  if (target.classList.contains("start"))
+    dispatch({ type: "MOVING_START", payload: true });
+  if (target.classList.contains("target"))
+    dispatch({ type: "MOVING_TARGET", payload: true });
+};
+
+export const handleMouseUp = (dispatch, state) => {
+  if (state.isMouseDown) dispatch({ type: "BUILDING_WALL", payload: false });
+  if (state.isMovingStart) dispatch({ type: "MOVING_START", payload: false });
+  if (state.isMovingTarget) dispatch({ type: "MOVING_TARGET", payload: false });
 };
 export const handleMouseEnter = (target, state) => {
-  if (state.isMouseDown) {
-    if (
-      !target.classList.contains("target") &&
-      !target.classList.contains("start") &&
-      target !== document.getElementById("grid")
-    ) {
-      target.classList.add("wall");
-    }
-  }
+  if (
+    state.isMouseDown &&
+    !target.classList.contains("target") &&
+    !target.classList.contains("start") &&
+    target !== document.getElementById("grid")
+  )
+    target.classList.add("wall");
+
+  if (
+    state.isMovingStart &&
+    !target.classList.contains("target") &&
+    !target.classList.contains("start") &&
+    target !== document.getElementById("grid")
+  )
+    target.classList.add("start");
+
+  if (
+    state.isMovingTarget &&
+    !target.classList.contains("target") &&
+    !target.classList.contains("start") &&
+    target !== document.getElementById("grid")
+  )
+    target.classList.add("target");
+};
+export const handleMouseLeave = (e, dispatch, state) => {
+  if (state.isMovingStart) e.target.classList.remove("start");
+  if (state.isMovingTarget) e.target.classList.remove("target");
 };
 // Show algorithm menu
 export const handleListClick = (event, setAlgo) => {

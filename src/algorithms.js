@@ -2,8 +2,11 @@
 export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
-  const nodes = state.nodes;
-  const startNode = nodes.filter((node) => node.isStart === true)[0];
+  // Get grid size
+  const row = getGridSize()[0];
+  const col = getGridSize()[1];
+
+  const startNode = state.nodes[state.startNodeIndex];
   const stack = [startNode];
 
   while (stack.length > 0) {
@@ -13,10 +16,6 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
     let currentNodeDom = document.getElementById(
       `node-${currentX}-${currentY}`
     );
-
-    // Get length of row and col
-    const row = getGridSize()[0];
-    const col = getGridSize()[1];
 
     // Check to see if current node is target
     // Marks current node as visited
@@ -61,14 +60,16 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
   // timeout function to slow down the for loop
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
+  // Get grid size
+  const row = getGridSize()[0];
+  const col = getGridSize()[1];
+
   // Get start node and add to queue
   const nodes = state.nodes;
-  const startNode = nodes.filter((node) => node.isStart === true)[0];
-
+  const startNode = nodes[state.startNodeIndex];
   const queue = [startNode];
-  console.log(queue[0]);
+  console.log(startNode);
   while (queue) {
-    console.log(`while loop`);
     const currentNode = queue.shift();
     const currentX = currentNode.row;
     const currentY = currentNode.col;
@@ -77,16 +78,14 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
     );
 
     // Validate if current node is target
-    if (currentNode.isTarget) {
+    if (currentNodeDom.classList.contains("target")) {
       dispatch({ type: "IS_RUNNING", payload: false });
       return;
     }
-    // Mark current node as visited
-    if (!currentNode.isStart) currentNodeDom.classList.add("visited");
 
-    // Get grid size
-    const row = getGridSize()[0];
-    const col = getGridSize()[1];
+    // Mark current node as visited
+    if (!currentNodeDom.classList.contains("start"))
+      currentNodeDom.classList.add("visited");
 
     // Validate neighbour nodes
     // Directional Vectors left down right up
