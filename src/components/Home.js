@@ -21,14 +21,10 @@ const Home = () => {
         const node = {
           row: x,
           col: y,
-          isStart: false,
-          isTarget: false,
         };
         defaultState.nodes.push(node);
       }
     }
-    defaultState.nodes[defaultState.nodes.length - 1].isTarget = true;
-    defaultState.nodes[145].isStart = true;
     return defaultState;
   };
 

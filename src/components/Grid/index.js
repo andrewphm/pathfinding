@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Utility
 import { handleMouseDown, handleMouseEnter } from "../../utility";
@@ -9,11 +9,11 @@ const Grid = ({ state, dispatch }) => {
       <div className="legend-container">
         <ul className="legend">
           <li>
-            <i className={`ri-arrow-right-s-line ri-lg start`}></i>
+            <div className="start-node"></div>
             <p> Start Node</p>
           </li>
           <li>
-            <i className={`ri-focus-2-line ri-lg target`}></i>
+            <div className="target-node"></div>
             <p> Target Node</p>
           </li>
           <li>
@@ -52,31 +52,10 @@ const Grid = ({ state, dispatch }) => {
         }}
       >
         {state.nodes.map((e, index) => {
-          const { row, col, isTarget, isStart } = e;
+          const { row, col } = e;
           let className = "";
-          if (isTarget) {
-            className = "target";
-            return (
-              <div
-                id={`node-${row}-${col}`}
-                key={index}
-                className={`grid-item ${className}`}
-              >
-                <i className={`ri-focus-2-line ri-lg ${className}`}></i>
-              </div>
-            );
-          } else if (isStart) {
-            className = "start";
-            return (
-              <div
-                id={`node-${row}-${col}`}
-                key={index}
-                className={`grid-item ${className}`}
-              >
-                <i className={`ri-arrow-right-s-line ri-lg ${className}`}></i>
-              </div>
-            );
-          }
+          if (index === 95) className = "start";
+          if (index === 760) className = "target";
           return (
             <div
               id={`node-${row}-${col}`}
@@ -86,6 +65,7 @@ const Grid = ({ state, dispatch }) => {
           );
         })}
       </div>
+      {console.log(`rendered`)}
     </section>
   );
 };
