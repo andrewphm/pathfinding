@@ -9,16 +9,22 @@ import {
   handleListClick,
   handleMouseDown,
   handleMouseEnter,
+  getGridSize,
 } from "../../utility";
 
 // Algorithms
-import { dfs } from "../../algorithms";
+import { dfs, bfs } from "../../algorithms";
 
 let row = 20;
-let col = 35;
+let col = 40;
 
 const Grid = () => {
-  // Set up state management for nodes
+  // Set properties of CSS variable grid row/col
+  let root = document.getElementById("root");
+  root.style.setProperty("--grid-rows", row);
+  root.style.setProperty("--grid-columns", col);
+
+  // Set up default state of nodes
   const initialGridArr = (row, col) => {
     const defaultState = { nodes: [], isMouseDown: false, isRunning: false };
     for (let x = 0; x < row; x++) {
@@ -33,23 +39,27 @@ const Grid = () => {
       }
     }
     defaultState.nodes[defaultState.nodes.length - 1].isTarget = true;
-    defaultState.nodes[0].isStart = true;
+    defaultState.nodes[300].isStart = true;
     return defaultState;
   };
-
-  // Set properties of CSS variable grid row/col
-  let root = document.getElementById("root");
-  root.style.setProperty("--grid-rows", row);
-  root.style.setProperty("--grid-columns", col);
 
   // Create useReducer hook to manage node/grid state. Set up state for algorithm chosen
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
   const [algo, setAlgo] = useState("");
 
   const handleVirtualize = (algo) => {
-    if (!state.isRunning && algo) {
-      dispatch({ type: "IS_RUNNING", payload: true });
-      dfs(state, dispatch, getNodeObject);
+    if (state.isRunning) return;
+    switch (algo) {
+      case "Depth-first search":
+        dispatch({ type: "IS_RUNNING", payload: true });
+        dfs(state, dispatch, getNodeObject, getGridSize);
+        break;
+      case "Breadth-first Search":
+        dispatch({ type: "IS_RUNNING", payload: true });
+        bfs(state, dispatch, getNodeObject, getGridSize);
+        break;
+      default:
+        break;
     }
   };
 
@@ -107,6 +117,9 @@ const Grid = () => {
           Clear Walls
         </button>
       </div>
+
+      {algo && <div>hi</div>}
+
       <div>
         <ul className="legend">
           <li>

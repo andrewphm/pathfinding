@@ -12,6 +12,7 @@ export const clearWalls = (row, col, state) => {
 };
 
 /* Mouse event handlers */
+// Drawing walls
 export const handleMouseDown = (target, dispatch) => {
   if (
     !target.classList.contains("target") &&
@@ -21,7 +22,6 @@ export const handleMouseDown = (target, dispatch) => {
     target.classList.add("wall");
   }
 };
-
 export const handleMouseEnter = (target, state) => {
   if (state.isMouseDown) {
     if (
@@ -33,16 +33,18 @@ export const handleMouseEnter = (target, state) => {
     }
   }
 };
-
+// Show algorithm menu
 export const handleListClick = (event, setAlgo) => {
   const algoList = document.querySelector(".algo-list");
   algoList.classList.toggle("show-menu");
   setAlgo(event.target.innerText);
 };
 
-export const getNodeObject = (row, col, state) => {
-  let nodeObj = state.nodes.filter(
-    (node) => node.row === row && node.col === col
-  );
-  return nodeObj[0];
+// Dynamically grab grid size
+export const getGridSize = () => {
+  const grid = document.getElementById("grid");
+  const styles = getComputedStyle(grid);
+  const row = styles.gridTemplateRows.split(" ").length;
+  const col = styles.gridTemplateColumns.split(" ").length;
+  return [row, col];
 };
