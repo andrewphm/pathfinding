@@ -46,7 +46,7 @@ const Grid = ({ state, dispatch }) => {
           handleMouseDown(event.target, dispatch);
         }}
         onMouseOver={(event) => {
-          handleMouseEnter(event.target, state);
+          handleMouseEnter(event.target, state, dispatch);
         }}
         onMouseUp={() => handleMouseUp(dispatch, state)}
       >

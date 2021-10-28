@@ -21,8 +21,9 @@ export const handleMouseDown = (target, dispatch) => {
     dispatch({ type: "BUILDING_WALL", payload: true });
     target.classList.add("wall");
   }
-  if (target.classList.contains("start"))
+  if (target.classList.contains("start")) {
     dispatch({ type: "MOVING_START", payload: true });
+  }
   if (target.classList.contains("target"))
     dispatch({ type: "MOVING_TARGET", payload: true });
 };
@@ -32,7 +33,7 @@ export const handleMouseUp = (dispatch, state) => {
   if (state.isMovingStart) dispatch({ type: "MOVING_START", payload: false });
   if (state.isMovingTarget) dispatch({ type: "MOVING_TARGET", payload: false });
 };
-export const handleMouseEnter = (target, state) => {
+export const handleMouseEnter = (target, state, dispatch) => {
   if (
     state.isMouseDown &&
     !target.classList.contains("target") &&
@@ -46,8 +47,11 @@ export const handleMouseEnter = (target, state) => {
     !target.classList.contains("target") &&
     !target.classList.contains("start") &&
     target !== document.getElementById("grid")
-  )
+  ) {
+    const index = getIndexOf(target);
+    dispatch({ type: "ASSIGN_START", payload: index });
     target.classList.add("start");
+  }
 
   if (
     state.isMovingTarget &&
@@ -75,4 +79,13 @@ export const getGridSize = () => {
   const row = styles.gridTemplateRows.split(" ").length;
   const col = styles.gridTemplateColumns.split(" ").length;
   return [row, col];
+};
+
+// Find index of new Start node or Target node
+export const getIndexOf = (target) => {
+  const parentNode = document.getElementById("grid");
+  const childNodes = parentNode.children;
+  const [...childNodesArr] = childNodes;
+  const index = childNodesArr.indexOf(target);
+  return index;
 };

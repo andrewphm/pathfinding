@@ -30,4 +30,11 @@ export const reducer = (state, action) => {
     console.log(state.isMovingTarget);
     return state;
   }
+
+  // chaning start/target node index
+  if (action.type === "ASSIGN_START") {
+    state.startNodeIndex = action.payload;
+    console.log(state);
+    return state;
+  }
 };
