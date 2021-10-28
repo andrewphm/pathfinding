@@ -57,7 +57,7 @@ const Grid = ({ state, dispatch }) => {
             className = "start";
             return (
               <div
-                onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
+                onMouseLeave={(e) => handleMouseLeave(e, state)}
                 id={`node-${row}-${col}`}
                 key={index}
                 className={`grid-item ${className}`}
@@ -68,7 +68,7 @@ const Grid = ({ state, dispatch }) => {
             className = "target";
             return (
               <div
-                onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
+                onMouseLeave={(e) => handleMouseLeave(e, state)}
                 id={`node-${row}-${col}`}
                 key={index}
                 className={`grid-item ${className}`}
@@ -77,7 +77,7 @@ const Grid = ({ state, dispatch }) => {
           }
           return (
             <div
-              onMouseLeave={(e) => handleMouseLeave(e, dispatch, state)}
+              onMouseLeave={(e) => handleMouseLeave(e, state)}
               id={`node-${row}-${col}`}
               key={index}
               className={`grid-item`}

@@ -5,8 +5,8 @@ import Grid from "./Grid/";
 
 import { reducer } from "./reducer";
 const Home = () => {
-  let row = 20;
-  let col = 45;
+  let row = 15;
+  let col = 15;
 
   // Set properties of CSS variable grid row/col
   let root = document.getElementById("root");
@@ -20,7 +20,7 @@ const Home = () => {
       isMouseDown: false,
       isRunning: false,
       startNodeIndex: 95,
-      targetNodeIndex: 760,
+      targetNodeIndex: 100,
       isMovingStart: false,
       isMovingTarget: false,
     };
@@ -29,6 +29,8 @@ const Home = () => {
         const node = {
           row: x,
           col: y,
+          parents: [],
+          dom: null,
         };
         defaultState.nodes.push(node);
       }

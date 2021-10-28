@@ -37,4 +37,9 @@ export const reducer = (state, action) => {
     console.log(state);
     return state;
   }
+  if (action.type === "ASSIGN_TARGET") {
+    state.targetNodeIndex = action.payload;
+    console.log(state);
+    return state;
+  }
 };

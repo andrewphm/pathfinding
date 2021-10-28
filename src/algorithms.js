@@ -67,18 +67,23 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
   // Get start node and add to queue
   const nodes = state.nodes;
   const startNode = nodes[state.startNodeIndex];
+  const visited = new Set([startNode]);
   const queue = [startNode];
-  console.log(startNode);
-  while (queue) {
+  let parents = [];
+  while (queue.length > 0) {
     const currentNode = queue.shift();
+    parents = [...currentNode.parents];
     const currentX = currentNode.row;
     const currentY = currentNode.col;
     const currentNodeDom = document.getElementById(
       `node-${currentX}-${currentY}`
     );
+    currentNode.dom = currentNodeDom;
+    currentNodeDom.classList.remove("queue");
 
     // Validate if current node is target
     if (currentNodeDom.classList.contains("target")) {
+      backtracking(currentNode);
       dispatch({ type: "IS_RUNNING", payload: false });
       return;
     }
@@ -104,13 +109,24 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
         let isWall = nextNode.classList.contains("wall");
         if (!isVisited && !isWall) {
           let nextNodeObj = getNodeObject(xCord, yCord);
-          let isInQueue = queue.some(
-            (node) =>
-              node.row === nextNodeObj.row && node.col === nextNodeObj.col
-          );
-          if (!isInQueue) queue.push(nextNodeObj);
+          if (!visited.has(nextNodeObj)) {
+            nextNode.classList.add("queue");
+            nextNodeObj.parents = [...parents, currentNode];
+            parents = [];
+            visited.add(nextNodeObj);
+            queue.push(nextNodeObj);
+          }
         }
       }
     }
+  }
+  dispatch({ type: "IS_RUNNING", payload: false });
+  return;
+};
+
+const backtracking = (currentNode) => {
+  const path = currentNode.parents;
+  for (let i = path.length - 1; i >= 0; i--) {
+    path[i].dom.classList.add("shortest");
   }
 };

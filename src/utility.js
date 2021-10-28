@@ -6,6 +6,8 @@ export const clearWalls = (row, col, state) => {
         let node = document.getElementById(`node-${x}-${y}`);
         node.classList.remove("wall");
         node.classList.remove("visited");
+        node.classList.remove("queue");
+        node.classList.remove("shortest");
       }
     }
   }
@@ -33,6 +35,7 @@ export const handleMouseUp = (dispatch, state) => {
   if (state.isMovingStart) dispatch({ type: "MOVING_START", payload: false });
   if (state.isMovingTarget) dispatch({ type: "MOVING_TARGET", payload: false });
 };
+
 export const handleMouseEnter = (target, state, dispatch) => {
   if (
     state.isMouseDown &&
@@ -58,13 +61,18 @@ export const handleMouseEnter = (target, state, dispatch) => {
     !target.classList.contains("target") &&
     !target.classList.contains("start") &&
     target !== document.getElementById("grid")
-  )
+  ) {
     target.classList.add("target");
+    const index = getIndexOf(target);
+    dispatch({ type: "ASSIGN_TARGET", payload: index });
+  }
 };
-export const handleMouseLeave = (e, dispatch, state) => {
+
+export const handleMouseLeave = (e, state) => {
   if (state.isMovingStart) e.target.classList.remove("start");
   if (state.isMovingTarget) e.target.classList.remove("target");
 };
+
 // Show algorithm menu
 export const handleListClick = (event, setAlgo) => {
   const algoList = document.querySelector(".algo-list");

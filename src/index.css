@@ -276,8 +276,8 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 28px;
-  width: 28px;
+  height: 35px;
+  width: 50px;
 }
 .start {
   color: var(--clr-start);
@@ -303,4 +303,10 @@ nav {
 }
 svg {
   color: red;
+}
+.queue {
+  background-color: var(--clr-orange-4);
+}
+.shortest {
+  background-color: yellow;
 }
