@@ -19,6 +19,15 @@ export const reducer = (state, action) => {
     return state;
   }
 
+  // assign algo state
+  if (action.type === "SET_ALGO") {
+    console.log("firing reducer");
+    state.algo = action.payload;
+    const newState = { ...state, algo: action.payload };
+
+    return newState;
+  }
+
   //Moving start or target nodes
   if (action.type === "MOVING_START") {
     state.isMovingStart = action.payload;
@@ -40,6 +49,12 @@ export const reducer = (state, action) => {
   if (action.type === "ASSIGN_TARGET") {
     state.targetNodeIndex = action.payload;
     console.log(state);
+    return state;
+  }
+
+  // Validating if pathfinding is done
+  if (action.type === "IS_FINISHED") {
+    state.isFinished = true;
     return state;
   }
 };

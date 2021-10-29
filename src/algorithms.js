@@ -84,7 +84,7 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
     // Validate if current node is target
     if (currentNodeDom.classList.contains("target")) {
       console.log(currentNode);
-      backtracking(currentNode);
+      backtracking(currentNode, dispatch);
       dispatch({ type: "IS_RUNNING", payload: false });
       return;
     }
@@ -98,7 +98,7 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
     const rowVectors = [0, 1, 0, -1];
     const colVectors = [-1, 0, 1, 0];
     for (let i = 0; i < 4; i++) {
-      await timeout(10);
+      await timeout(5);
       const xCord = currentX + rowVectors[i];
       const yCord = currentY + colVectors[i];
 
@@ -125,10 +125,14 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
   return;
 };
 
-const backtracking = (currentNode) => {
+const backtracking = async (currentNode, dispatch) => {
+  const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
   const path = currentNode.parents;
   currentNode.dom.classList.add("shortest");
   for (let i = path.length - 1; i >= 0; i--) {
+    await timeout(50);
     path[i].dom.classList.add("shortest");
   }
+  dispatch({ type: "IS_FINISHED" });
 };

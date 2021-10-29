@@ -65,6 +65,9 @@ export const handleMouseEnter = (target, state, dispatch) => {
     target.classList.add("target");
     const index = getIndexOf(target);
     dispatch({ type: "ASSIGN_TARGET", payload: index });
+
+    if (state.isFinished) {
+    }
   }
 };
 
@@ -74,10 +77,12 @@ export const handleMouseLeave = (e, state) => {
 };
 
 // Show algorithm menu
-export const handleListClick = (event, setAlgo) => {
+export const handleListClick = (event, dispatch, state) => {
+  let algo = event.target.innerText;
+  console.log(algo);
   const algoList = document.querySelector(".algo-list");
   algoList.classList.toggle("show-menu");
-  setAlgo(event.target.innerText);
+  dispatch({ type: "SET_ALGO", payload: algo });
 };
 
 // Dynamically grab grid size

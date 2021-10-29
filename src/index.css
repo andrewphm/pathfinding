@@ -87,8 +87,9 @@ a,
 i,
 ul,
 li {
-  text-decoration: none;
+  text-decoration: none !important;
   list-style: none;
+  color: inherit;
 }
 section {
   padding: 1rem;
@@ -109,9 +110,24 @@ header {
   color: white;
 }
 
+.title-icon {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
 .title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 1rem 0;
+}
+
+.icon {
+  background-image: url(./assets/pined-path-svgrepo-com.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 .links a {
@@ -197,8 +213,8 @@ nav {
 
 /* ========== Grid Legend ========== */
 .legend-container {
-  width: 80%;
   margin: 0 auto;
+  width: 90%;
 }
 
 .legend {

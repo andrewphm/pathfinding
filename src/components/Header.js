@@ -6,7 +6,7 @@ import { handleListClick, clearWalls, getGridSize } from "../utility";
 // Algorithms
 import { dfs, bfs } from "../algorithms";
 
-const Header = ({ algo, dispatch, state, row, col, setAlgo }) => {
+const Header = ({ dispatch, state, row, col }) => {
   const getNodeObject = (row, col) => {
     let nodeObj = state.nodes.filter(
       (node) => node.row === row && node.col === col
@@ -14,9 +14,9 @@ const Header = ({ algo, dispatch, state, row, col, setAlgo }) => {
     return nodeObj[0];
   };
 
-  const handleVirtualize = (algo) => {
+  const handleVirtualize = (state) => {
     if (state.isRunning) return;
-    switch (algo) {
+    switch (state.algo) {
       case "Depth-first search":
         dispatch({ type: "IS_RUNNING", payload: true });
         dfs(state, dispatch, getNodeObject, getGridSize);
@@ -32,7 +32,12 @@ const Header = ({ algo, dispatch, state, row, col, setAlgo }) => {
 
   return (
     <header>
-      <h1 className="title">Pathfinding Visualizer</h1>
+      <div className="title-icon">
+        <div className="icon"></div>
+        <a href="http://andrewpham.ca/pathfinding">
+          <h1 className="title">Pathfinding Visualizer</h1>
+        </a>
+      </div>
 
       <div className="grid-buttons">
         <div className="algo-menu">
@@ -47,28 +52,28 @@ const Header = ({ algo, dispatch, state, row, col, setAlgo }) => {
             <i className="ri-arrow-down-s-fill ri-lg algo-icon"></i>
           </button>
           <ul className="algo-list">
-            <li onClick={(event) => handleListClick(event, setAlgo)}>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Dijkstra's Algorithm
             </li>
-            <li onClick={(event) => handleListClick(event, setAlgo)}>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
               A* Search
             </li>
-            <li onClick={(event) => handleListClick(event, setAlgo)}>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Breadth-first Search
             </li>
-            <li onClick={(event) => handleListClick(event, setAlgo)}>
-              Depth-first search
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
+              Depth-first Search
             </li>
-            <li onClick={(event) => handleListClick(event, setAlgo)}>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Swarm Algoirthm
             </li>
           </ul>
         </div>
         <button
-          onClick={() => handleVirtualize(algo)}
+          onClick={() => handleVirtualize(state)}
           className="btn visualize-btn"
         >
-          Visualize {algo}!
+          Visualize {state.algo}
         </button>
         <button
           className="clear-btn btn"
@@ -92,6 +97,8 @@ const Header = ({ algo, dispatch, state, row, col, setAlgo }) => {
           <i className="ri-user-fill ri-lg"></i>
         </a>
       </div>
+      {console.log("rendering")}
+      {console.log(state)}
     </header>
   );
 };

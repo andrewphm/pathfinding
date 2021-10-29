@@ -35,7 +35,7 @@ const Grid = ({ state, dispatch }) => {
           </li>
           <li>
             <div className="wall-node"></div>
-            <p> Wall nodes</p>
+            <p> Wall Nodes</p>
           </li>
         </ul>
       </div>
