@@ -265,7 +265,7 @@ nav {
   display: grid;
   grid-template-rows: repeat(var(--grid-rows), 1fr);
   grid-template-columns: repeat(var(--grid-columns), 1fr);
-  border: 3px solid var(--clr-grey-6);
+  border: 2px solid var(--clr-grey-6);
   background-color: var(--clr-white);
   margin: 0 2rem;
 }
@@ -276,8 +276,8 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 35px;
-  width: 50px;
+  height: 28px;
+  width: 28px;
 }
 .start {
   color: var(--clr-start);
