@@ -1,4 +1,5 @@
 // DFS
+
 export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
@@ -33,7 +34,7 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
     // Validate neighbour nodes
     for (let i = 0; i < 4; i++) {
       // Using timeout to slow down loop for better viewability
-      await timeout(10);
+      await timeout();
       let xCord = currentX + rowVectors[i];
       let yCord = currentY + colVectors[i];
 
@@ -45,7 +46,7 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
         let isWall = classes.contains("wall");
         // Validate node is not a wall and hasn't been visited
         if (!isVisited && !isWall) {
-          let nodeObj = getNodeObject(xCord, yCord);
+          let nodeObj = getNodeObject(state, xCord, yCord);
           // Push neighbour node to stack
           stack.push(nodeObj);
         }
@@ -56,20 +57,40 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
   if (stack.length === 0) dispatch({ type: "IS_RUNNING", payload: false });
 };
 
-export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
+const clearGrid = (row, col) => {
+  for (let x = 0; x < row; x++) {
+    for (let y = 0; y < col; y++) {
+      let node = document.getElementById(`node-${x}-${y}`);
+      node.classList.remove("visited");
+      node.classList.remove("queue");
+      node.classList.remove("shortest");
+    }
+  }
+};
+
+export const bfs = async (
+  state,
+  dispatch,
+  getNodeObject,
+  getGridSize,
+  instant
+) => {
   // timeout function to slow down the for loop
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
   // Get grid size
   const row = getGridSize()[0];
   const col = getGridSize()[1];
+  // Clear visited, queue, and shortest path
+  clearGrid(row, col);
 
   // Get start node and add to queue
   const nodes = state.nodes;
   const startNode = nodes[state.startNodeIndex];
   const visited = new Set([startNode]);
-  const queue = [startNode];
   let parents = [];
+  startNode["parents"] = parents;
+  const queue = [startNode];
   while (queue.length > 0) {
     const currentNode = queue.shift();
     parents = [...currentNode.parents];
@@ -83,8 +104,7 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
 
     // Validate if current node is target
     if (currentNodeDom.classList.contains("target")) {
-      console.log(currentNode);
-      backtracking(currentNode, dispatch);
+      backtracking(currentNode, dispatch, instant);
       dispatch({ type: "IS_RUNNING", payload: false });
       return;
     }
@@ -98,7 +118,7 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
     const rowVectors = [0, 1, 0, -1];
     const colVectors = [-1, 0, 1, 0];
     for (let i = 0; i < 4; i++) {
-      await timeout(5);
+      if (instant === undefined) await timeout();
       const xCord = currentX + rowVectors[i];
       const yCord = currentY + colVectors[i];
 
@@ -109,7 +129,7 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
         let isVisited = nextNode.classList.contains("visited");
         let isWall = nextNode.classList.contains("wall");
         if (!isVisited && !isWall) {
-          let nextNodeObj = getNodeObject(xCord, yCord);
+          let nextNodeObj = getNodeObject(state, xCord, yCord);
           if (!visited.has(nextNodeObj)) {
             nextNode.classList.add("queue");
             nextNodeObj.parents = [...parents, currentNode];
@@ -122,17 +142,20 @@ export const bfs = async (state, dispatch, getNodeObject, getGridSize) => {
     parents = [];
   }
   dispatch({ type: "IS_RUNNING", payload: false });
+  dispatch({ type: "IS_FINISHED", payload: true });
   return;
 };
 
-const backtracking = async (currentNode, dispatch) => {
+const backtracking = async (currentNode, dispatch, instant) => {
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
   const path = currentNode.parents;
+  console.log(currentNode);
   currentNode.dom.classList.add("shortest");
-  for (let i = path.length - 1; i >= 0; i--) {
-    await timeout(50);
+  for (let i = path.length - 1; i > 0; i--) {
+    if (instant === undefined) await timeout(50);
     path[i].dom.classList.add("shortest");
   }
-  dispatch({ type: "IS_FINISHED" });
+  dispatch({ type: "IS_FINISHED", payload: true });
+  return;
 };

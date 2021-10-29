@@ -1,23 +1,21 @@
 import React from "react";
 
 // Utility
-import { handleListClick, clearWalls, getGridSize } from "../utility";
+import {
+  handleListClick,
+  clearWalls,
+  getGridSize,
+  getNodeObject,
+} from "../utility";
 
 // Algorithms
 import { dfs, bfs } from "../algorithms";
 
 const Header = ({ dispatch, state, row, col }) => {
-  const getNodeObject = (row, col) => {
-    let nodeObj = state.nodes.filter(
-      (node) => node.row === row && node.col === col
-    );
-    return nodeObj[0];
-  };
-
   const handleVirtualize = (state) => {
     if (state.isRunning) return;
     switch (state.algo) {
-      case "Depth-first search":
+      case "Depth-first Search":
         dispatch({ type: "IS_RUNNING", payload: true });
         dfs(state, dispatch, getNodeObject, getGridSize);
         break;
@@ -29,7 +27,6 @@ const Header = ({ dispatch, state, row, col }) => {
         break;
     }
   };
-
   return (
     <header>
       <div className="title-icon">
@@ -53,16 +50,16 @@ const Header = ({ dispatch, state, row, col }) => {
           </button>
           <ul className="algo-list">
             <li onClick={(event) => handleListClick(event, dispatch, state)}>
-              Dijkstra's Algorithm
-            </li>
-            <li onClick={(event) => handleListClick(event, dispatch, state)}>
-              A* Search
-            </li>
-            <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Breadth-first Search
             </li>
             <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Depth-first Search
+            </li>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
+              Dijkstra's Algorithm
+            </li>
+            <li onClick={(event) => handleListClick(event, dispatch, state)}>
+              A* Search
             </li>
             <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Swarm Algoirthm
@@ -70,7 +67,7 @@ const Header = ({ dispatch, state, row, col }) => {
           </ul>
         </div>
         <button
-          onClick={() => handleVirtualize(state)}
+          onClick={() => handleVirtualize(state, dispatch)}
           className="btn visualize-btn"
         >
           Visualize {state.algo}
@@ -78,7 +75,7 @@ const Header = ({ dispatch, state, row, col }) => {
         <button
           className="clear-btn btn"
           onClick={() => {
-            clearWalls(row, col, state);
+            clearWalls(row, col, dispatch);
           }}
         >
           Clear Walls

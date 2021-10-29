@@ -5,7 +5,7 @@ import Grid from "./Grid/";
 
 import { reducer } from "./reducer";
 const Home = () => {
-  let row = 20;
+  let row = 18;
   let col = 35;
 
   // Set properties of CSS variable grid row/col
@@ -31,7 +31,6 @@ const Home = () => {
         const node = {
           row: x,
           col: y,
-          parents: [],
           dom: null,
         };
         defaultState.nodes.push(node);

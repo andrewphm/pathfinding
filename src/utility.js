@@ -1,14 +1,13 @@
 // Clear walls
-export const clearWalls = (row, col, state) => {
-  if (!state.isRunning) {
-    for (let x = 0; x < row; x++) {
-      for (let y = 0; y < col; y++) {
-        let node = document.getElementById(`node-${x}-${y}`);
-        node.classList.remove("wall");
-        node.classList.remove("visited");
-        node.classList.remove("queue");
-        node.classList.remove("shortest");
-      }
+export const clearWalls = (row, col, dispatch) => {
+  dispatch({ type: "IS_FINISHED", payload: false });
+  for (let x = 0; x < row; x++) {
+    for (let y = 0; y < col; y++) {
+      let node = document.getElementById(`node-${x}-${y}`);
+      node.classList.remove("wall");
+      node.classList.remove("visited");
+      node.classList.remove("queue");
+      node.classList.remove("shortest");
     }
   }
 };
@@ -36,7 +35,7 @@ export const handleMouseUp = (dispatch, state) => {
   if (state.isMovingTarget) dispatch({ type: "MOVING_TARGET", payload: false });
 };
 
-export const handleMouseEnter = (target, state, dispatch) => {
+export const handleMouseEnter = (target, state, dispatch, algorithmObj) => {
   if (
     state.isMouseDown &&
     !target.classList.contains("target") &&
@@ -51,9 +50,19 @@ export const handleMouseEnter = (target, state, dispatch) => {
     !target.classList.contains("start") &&
     target !== document.getElementById("grid")
   ) {
+    target.classList.add("start");
     const index = getIndexOf(target);
     dispatch({ type: "ASSIGN_START", payload: index });
-    target.classList.add("start");
+
+    if (state.isFinished) {
+      let instant = true;
+      let { getGridSize, getNodeObject } = algorithmObj;
+      let [bfs, dfs] = algorithmObj.algorithms;
+      if (state.algo === "Breadth-first Search") {
+        console.log("firing");
+        bfs(state, dispatch, getNodeObject, getGridSize, instant);
+      }
+    }
   }
 
   if (
@@ -67,6 +76,13 @@ export const handleMouseEnter = (target, state, dispatch) => {
     dispatch({ type: "ASSIGN_TARGET", payload: index });
 
     if (state.isFinished) {
+      let instant = true;
+      let { getGridSize, getNodeObject } = algorithmObj;
+      let [bfs, dfs] = algorithmObj.algorithms;
+      if (state.algo === "Breadth-first Search") {
+        console.log("firing");
+        bfs(state, dispatch, getNodeObject, getGridSize, instant);
+      }
     }
   }
 };
@@ -101,4 +117,12 @@ export const getIndexOf = (target) => {
   const [...childNodesArr] = childNodes;
   const index = childNodesArr.indexOf(target);
   return index;
+};
+
+// Get node object via on row/col
+export const getNodeObject = (state, row, col) => {
+  let nodeObj = state.nodes.filter(
+    (node) => node.row === row && node.col === col
+  );
+  return nodeObj[0];
 };

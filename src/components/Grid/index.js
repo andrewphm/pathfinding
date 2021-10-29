@@ -6,9 +6,19 @@ import {
   handleMouseEnter,
   handleMouseLeave,
   handleMouseUp,
+  getGridSize,
+  getNodeObject,
 } from "../../utility";
 
+// Algorithms
+import { bfs, dfs } from "../../algorithms";
+
 const Grid = ({ state, dispatch }) => {
+  let algorithmObj = {
+    algorithms: [bfs, dfs],
+    getGridSize: getGridSize,
+    getNodeObject: getNodeObject,
+  };
   return (
     <section className="grid-container">
       <div className="legend-container">
@@ -46,7 +56,7 @@ const Grid = ({ state, dispatch }) => {
           handleMouseDown(event.target, dispatch);
         }}
         onMouseOver={(event) => {
-          handleMouseEnter(event.target, state, dispatch);
+          handleMouseEnter(event.target, state, dispatch, algorithmObj);
         }}
         onMouseUp={() => handleMouseUp(dispatch, state)}
       >
