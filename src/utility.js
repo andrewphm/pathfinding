@@ -59,8 +59,10 @@ export const handleMouseEnter = (target, state, dispatch, algorithmObj) => {
       let { getGridSize, getNodeObject } = algorithmObj;
       let [bfs, dfs] = algorithmObj.algorithms;
       if (state.algo === "Breadth-first Search") {
-        console.log("firing");
         bfs(state, dispatch, getNodeObject, getGridSize, instant);
+      }
+      if (state.algo === "Depth-first Search") {
+        dfs(state, dispatch, getNodeObject, getGridSize, instant);
       }
     }
   }
@@ -80,8 +82,10 @@ export const handleMouseEnter = (target, state, dispatch, algorithmObj) => {
       let { getGridSize, getNodeObject } = algorithmObj;
       let [bfs, dfs] = algorithmObj.algorithms;
       if (state.algo === "Breadth-first Search") {
-        console.log("firing");
         bfs(state, dispatch, getNodeObject, getGridSize, instant);
+      }
+      if (state.algo === "Depth-first Search") {
+        dfs(state, dispatch, getNodeObject, getGridSize, instant);
       }
     }
   }
@@ -95,7 +99,6 @@ export const handleMouseLeave = (e, state) => {
 // Show algorithm menu
 export const handleListClick = (event, dispatch, state) => {
   let algo = event.target.innerText;
-  console.log(algo);
   const algoList = document.querySelector(".algo-list");
   algoList.classList.toggle("show-menu");
   dispatch({ type: "SET_ALGO", payload: algo });

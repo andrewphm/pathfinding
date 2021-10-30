@@ -95,7 +95,6 @@ const Grid = ({ state, dispatch }) => {
           );
         })}
       </div>
-      {console.log(`rendered`)}
     </section>
   );
 };

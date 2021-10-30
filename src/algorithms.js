@@ -1,11 +1,20 @@
 // DFS
 
-export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
+export const dfs = async (
+  state,
+  dispatch,
+  getNodeObject,
+  getGridSize,
+  instant
+) => {
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
   // Get grid size
   const row = getGridSize()[0];
   const col = getGridSize()[1];
+
+  // Clear visited, queue, and shortest path
+  clearGrid(row, col);
 
   const startNode = state.nodes[state.startNodeIndex];
   const stack = [startNode];
@@ -22,6 +31,7 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
     // Marks current node as visited
     if (currentNodeDom.classList.contains("target")) {
       dispatch({ type: "IS_RUNNING", payload: false });
+      dispatch({ type: "IS_FINISHED", payload: true });
       return;
     }
     if (!currentNodeDom.classList.contains("start"))
@@ -34,7 +44,7 @@ export const dfs = async (state, dispatch, getNodeObject, getGridSize) => {
     // Validate neighbour nodes
     for (let i = 0; i < 4; i++) {
       // Using timeout to slow down loop for better viewability
-      await timeout();
+      if (instant === undefined) await timeout();
       let xCord = currentX + rowVectors[i];
       let yCord = currentY + colVectors[i];
 
@@ -150,7 +160,6 @@ const backtracking = async (currentNode, dispatch, instant) => {
   const timeout = (time) => new Promise((resolve) => setTimeout(resolve, time));
 
   const path = currentNode.parents;
-  console.log(currentNode);
   currentNode.dom.classList.add("shortest");
   for (let i = path.length - 1; i > 0; i--) {
     if (instant === undefined) await timeout(50);

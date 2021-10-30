@@ -19,14 +19,14 @@ export const reducer = (state, action) => {
     return state;
   }
 
-  // assign algo state
+  // Assign algo state
   if (action.type === "SET_ALGO") {
     state.algo = action.payload;
     const newState = { ...state, algo: action.payload };
     return newState;
   }
 
-  //Moving start or target nodes
+  // Moving start or target nodes
   if (action.type === "MOVING_START") {
     state.isMovingStart = action.payload;
     return state;
@@ -36,7 +36,7 @@ export const reducer = (state, action) => {
     return state;
   }
 
-  // chaning start/target node index
+  // changing start/target node index
   if (action.type === "ASSIGN_START") {
     state.startNodeIndex = action.payload;
     return state;

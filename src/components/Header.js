@@ -39,13 +39,14 @@ const Header = ({ dispatch, state, row, col }) => {
       <div className="grid-buttons">
         <div className="algo-menu">
           <button
-            className="btn"
+            href="#"
+            className="choose-algo"
             onClick={() => {
               const algoList = document.querySelector(".algo-list");
               algoList.classList.toggle("show-menu");
             }}
           >
-            Choose Algorithm...{" "}
+            <strong>Algorithms</strong>{" "}
             <i className="ri-arrow-down-s-fill ri-lg algo-icon"></i>
           </button>
           <ul className="algo-list">
@@ -94,8 +95,6 @@ const Header = ({ dispatch, state, row, col }) => {
           <i className="ri-user-fill ri-lg"></i>
         </a>
       </div>
-      {console.log("rendering")}
-      {console.log(state)}
     </header>
   );
 };
