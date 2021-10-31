@@ -20,7 +20,15 @@ const Grid = ({ state, dispatch }) => {
     getNodeObject: getNodeObject,
   };
   return (
-    <section className="grid-container">
+    <section
+      onClick={() => {
+        console.log("firing");
+        let list = document.getElementById("algo-list");
+        if (list.classList.contains("show-menu"))
+          list.classList.remove("show-menu");
+      }}
+      className="grid-container"
+    >
       <div className="legend-container">
         <ul className="legend">
           <li>

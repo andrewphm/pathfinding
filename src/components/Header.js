@@ -36,8 +36,8 @@ const Header = ({ dispatch, state, row, col }) => {
         </a>
       </div>
 
-      <div className="grid-buttons">
-        <div className="algo-menu">
+      <ul className="grid-buttons">
+        <li className="algo-menu">
           <button
             href="#"
             className="choose-algo"
@@ -49,7 +49,7 @@ const Header = ({ dispatch, state, row, col }) => {
             <strong>Algorithms</strong>{" "}
             <i className="ri-arrow-down-s-fill ri-lg algo-icon"></i>
           </button>
-          <ul className="algo-list">
+          <ul id="algo-list" className="algo-list">
             <li onClick={(event) => handleListClick(event, dispatch, state)}>
               Breadth-first Search
             </li>
@@ -66,22 +66,26 @@ const Header = ({ dispatch, state, row, col }) => {
               Swarm Algoirthm
             </li>
           </ul>
-        </div>
-        <button
-          onClick={() => handleVirtualize(state, dispatch)}
-          className="btn visualize-btn"
-        >
-          Visualize {state.algo}
-        </button>
-        <button
-          className="clear-btn btn"
-          onClick={() => {
-            clearWalls(row, col, dispatch);
-          }}
-        >
-          Clear Walls
-        </button>
-      </div>
+        </li>
+        <li>
+          <button
+            onClick={() => handleVirtualize(state, dispatch)}
+            className="btn visualize-btn"
+          >
+            Visualize {state.algo}
+          </button>
+        </li>
+        <li>
+          <button
+            className="clear-btn btn"
+            onClick={() => {
+              clearWalls(row, col, dispatch);
+            }}
+          >
+            Clear Walls
+          </button>
+        </li>
+      </ul>
 
       <div className="links">
         <a

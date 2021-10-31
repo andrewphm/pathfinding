@@ -47,6 +47,7 @@
   --clr-white: #fff;
   --clr-target: hsl(360, 67%, 44%);
   --clr-shortest-path: rgb(255, 254, 106);
+  --clr-highlight: #64ffda;
   --clr-start: hsl(125, 67%, 44%);
   --clr-green-light: hsl(125, 71%, 66%);
   --clr-black: #222;
@@ -123,6 +124,10 @@ header {
   margin: 1rem 0;
 }
 
+.title:hover {
+  color: var(--clr-highlight);
+}
+
 .icon {
   background-image: url(./assets/pined-path-svgrepo-com.svg);
   background-position: center center;
@@ -188,8 +193,8 @@ nav {
   cursor: pointer;
 }
 
-.choose-algo:focus {
-  color: gray;
+.choose-algo:hover {
+  color: var(--clr-highlight);
 }
 
 .algo-list {
