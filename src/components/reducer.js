@@ -11,11 +11,13 @@ export const reducer = (state, action) => {
 
   if (action.type === "START_NODE") {
     state.startNodeIndex = action.payload;
+    console.log(action.payload);
     return state;
   }
 
   if (action.type === "TARGET_NODE") {
     state.targetNodeIndex = action.payload;
+    console.log(action.payload);
     return state;
   }
 
@@ -39,10 +41,12 @@ export const reducer = (state, action) => {
   // changing start/target node index
   if (action.type === "ASSIGN_START") {
     state.startNodeIndex = action.payload;
+    console.log(action.payload);
     return state;
   }
   if (action.type === "ASSIGN_TARGET") {
     state.targetNodeIndex = action.payload;
+    console.log(action.payload);
     return state;
   }
 

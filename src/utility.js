@@ -5,9 +5,6 @@ export const clearWalls = (row, col, dispatch) => {
     for (let y = 0; y < col; y++) {
       let node = document.getElementById(`node-${x}-${y}`);
       node.classList.remove("wall");
-      node.classList.remove("visited");
-      node.classList.remove("queue");
-      node.classList.remove("shortest");
     }
   }
 };

@@ -10,26 +10,32 @@ const Home = () => {
   const checkSize = () => {
     setWindowWidth(window.innerWidth);
   };
-
   window.addEventListener("resize", checkSize);
 
   let row = 0;
   let col = 0;
+  let startIndex = 0;
+  let targetIndex = 300;
   if (windowWidth > 1600) {
     row = 25;
     col = 50;
-  } else if (windowWidth > 1200) {
-    row = 20;
-    col = 40;
+    startIndex = 305;
+    targetIndex = 1043;
   } else if (windowWidth > 1080) {
     row = 20;
-    col = 35;
+    col = 40;
+    startIndex = 165;
+    targetIndex = 672;
   } else if (windowWidth > 768) {
-    row = 18;
-    col = 29;
+    row = 20;
+    col = 30;
+    startIndex = 124;
+    targetIndex = 503;
   } else if (windowWidth > 320) {
-    row = 15;
+    row = 25;
     col = 20;
+    startIndex = 43;
+    targetIndex = 435;
   }
 
   // Set properties of CSS variable grid row/col
@@ -43,8 +49,8 @@ const Home = () => {
       nodes: [],
       isMouseDown: false,
       isRunning: false,
-      startNodeIndex: 75,
-      targetNodeIndex: 590,
+      startNodeIndex: startIndex,
+      targetNodeIndex: targetIndex,
       isMovingStart: false,
       isMovingTarget: false,
       isFinished: false,

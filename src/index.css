@@ -115,8 +115,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5rem;
-  row-gap: 1rem;
+  padding: 10px;
   background-color: var(--clr-primary-2);
   color: white;
   flex-wrap: wrap;
@@ -171,8 +170,7 @@ nav {
   border-style: none;
   border-width: unset;
   border-color: transparent;
-  margin: 0.5rem;
-  margin-right: 1rem;
+  white-space: nowrap;
 }
 .btn:hover {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -186,6 +184,8 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  row-gap: 0.5rem;
+  column-gap: 0.5rem;
   flex-wrap: wrap;
 }
 
@@ -216,6 +216,7 @@ nav {
   font-family: "Averta";
   cursor: pointer;
   margin-right: 1.5rem;
+  white-space: nowrap;
 }
 
 .choose-algo:hover {
@@ -250,7 +251,7 @@ nav {
 /* ========== Grid ========== */
 /* Algorithm Description */
 .algo-description {
-  margin: 2rem auto;
+  margin: 1rem auto;
   text-align: center;
 }
 
@@ -383,25 +384,111 @@ svg {
 }
 
 /* ======= MEDIA QUERIES ======= */
-
-@media screen and (min-width: 1600px) {
-  .grid-container {
-    padding: 10px 150px;
+@media screen and (min-width: 768px) {
+  header {
+    padding: 10px 50px;
   }
-}
-@media screen and (min-width: 1440px) {
-  .grid-container {
-    padding: 10px 100px;
-  }
-}
-@media screen and (min-width: 1200px) {
-  .grid-container {
-    padding: 10px 80px;
+  .legend-container {
+    width: 100%;
   }
 }
 
 @media screen and (min-width: 1080px) {
   .grid-container {
     padding: 10px 50px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  header {
+    padding: 10px 100px;
+  }
+  .grid-container {
+    padding: 10px 80px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  header {
+    padding: 10px 150px;
+  }
+  .grid-container {
+    padding: 10px 100px;
+  }
+}
+@media screen and (min-width: 1600px) {
+  header {
+    padding: 10px 200px;
+  }
+  .grid-container {
+    padding: 10px 150px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .title {
+    font-size: 1rem;
+  }
+  .links a {
+    font-size: 0.8rem;
+  }
+  .grid-buttons {
+    font-size: 0.8rem;
+  }
+  .choose-algo {
+    font-size: 0.8rem;
+  }
+  .btn {
+    font-size: 0.8rem;
+  }
+  .algo-description {
+    margin: auto;
+    font-size: 0.9rem;
+  }
+  .legend-container {
+    width: 100%;
+    font-size: 0.7em;
+  }
+  .unvisited-node {
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--clr-primary-7);
+    margin-right: 0.3rem;
+  }
+  .visited-node {
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--clr-primary-7);
+    background-color: var(--clr-orange-7);
+    margin-right: 0.3rem;
+  }
+  .shortest-path {
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--clr-primary-7);
+    background-color: var(--clr-shortest-path);
+    margin-right: 0.3rem;
+  }
+  .wall-node {
+    background-color: var(--clr-primary-1);
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--clr-primary-7);
+    margin-right: 0.3rem;
+  }
+  .target-node {
+    height: 20px;
+    width: 20px;
+    margin-right: 0.3rem;
+    background-image: url(./assets/bullseye-solid.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .start-node {
+    height: 20px;
+    width: 20px;
+    margin-right: 0.3rem;
+    background-image: url(./assets/running-solid.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 }
