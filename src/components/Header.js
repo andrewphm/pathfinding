@@ -35,18 +35,6 @@ const Header = ({ dispatch, state, row, col }) => {
         <a href="http://andrewpham.ca/pathfinding">
           <h1 className="title">Pathfinding Visualizer</h1>
         </a>
-        <div className="links">
-          <a
-            target="_blank"
-            href="https://github.com/andrewphm/pathfinding"
-            rel="noreferrer"
-          >
-            <i className="ri-github-fill ri-lg"></i>
-          </a>
-          <a target="_blank" href="https://andrewpham.ca" rel="noreferrer">
-            <i className="ri-user-fill ri-lg"></i>
-          </a>
-        </div>
       </div>
 
       <ul className="grid-buttons">
@@ -109,6 +97,18 @@ const Header = ({ dispatch, state, row, col }) => {
           </button>
         </li>
       </ul>
+      <div className="links">
+        <a
+          target="_blank"
+          href="https://github.com/andrewphm/pathfinding"
+          rel="noreferrer"
+        >
+          <i className="ri-github-fill ri-lg"></i>
+        </a>
+        <a target="_blank" href="https://andrewpham.ca" rel="noreferrer">
+          <i className="ri-user-fill ri-lg"></i>
+        </a>
+      </div>
     </header>
   );
 };

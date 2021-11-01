@@ -281,6 +281,7 @@ header {
 .title {
   font-size: 1.2rem;
   margin: 1rem 0;
+  white-space: nowrap;
 }
 
 .title:hover {
@@ -566,11 +567,8 @@ svg {
   }
 }
 @media screen and (min-width: 1600px) {
-  header {
-    padding: 10px 200px;
-  }
   .grid-container {
-    padding: 10px 150px;
+    padding: 10px 150px 20px;
   }
 }
 
@@ -605,12 +603,16 @@ svg {
   .skip-tutorial {
     margin: 1rem;
   }
-
+  /* Header */
   .title {
     font-size: 1rem;
   }
+  .links {
+    height: 0;
+    width: 0;
+  }
   .links a {
-    font-size: 0.8rem;
+    font-size: 0;
   }
   .grid-buttons {
     font-size: 0.8rem;
