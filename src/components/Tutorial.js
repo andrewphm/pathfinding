@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import slide3img from "../assets/choose-algorithm.png";
 import makingWalls from "../assets/making-walls.gif";
+import dragging from "../assets/dragging.gif";
 
 const Tutorial = ({ tutorial, setTutorial }) => {
   const [slide, setSlide] = useState(1);
@@ -94,9 +95,46 @@ const Tutorial = ({ tutorial, setTutorial }) => {
             Feel free to draw up walls to visualize how the algorithm deals with
             them. To remove walls click the "Clear Walls" button at the top!
           </p>
-          <div className="image-wrapper">
+          <div className="gif-wrapper">
             <img src={makingWalls} alt="" />
           </div>
+        </div>
+      );
+    } else if (slide === 6) {
+      return (
+        <div className="slide">
+          <h1>Dragging Nodes</h1>
+          <h2>Click and drag the start and target node to reposition them.</h2>
+          <p>
+            You can reposition the Start Node and Target Node at any time. If
+            the pathfinding algorithm is finished, you can move around the nodes
+            to instantly see how the pathfinding algorithm reacts.
+          </p>
+          <div className="gif-wrapper">
+            <img src={dragging} alt="" />
+          </div>
+        </div>
+      );
+    } else if (slide === 7) {
+      return (
+        <div className="slide">
+          <h1>Enjoy!</h1>
+          <h2>
+            I hope you have just as much fun playing around with this
+            visualization tool as I had building it!
+          </h2>
+          <p>
+            If you want to see how I made it or the source code for the
+            application, check out my{" "}
+            <a
+              href="https://github.com/andrewphm/pathfinding"
+              target="_blank"
+              rel="noreferrer"
+            >
+              github
+            </a>
+            !
+          </p>
         </div>
       );
     }
@@ -105,7 +143,7 @@ const Tutorial = ({ tutorial, setTutorial }) => {
     <section className="overlay">
       <div className="tutorial">
         <div className="slide-number">
-          <p>{slide}/9</p>
+          <p>{slide}/7</p>
         </div>
         <div className="close-tutorial" onClick={() => setTutorial(false)}>
           <i className="ri-close-fill"></i>
@@ -127,12 +165,17 @@ const Tutorial = ({ tutorial, setTutorial }) => {
               Previous
             </button>
           )}
-          {slide < 9 && (
+          {slide < 7 && (
             <button
               className="tutorial-btn"
               onClick={() => setSlide(slide + 1)}
             >
               Next
+            </button>
+          )}
+          {slide >= 7 && (
+            <button className="tutorial-btn" onClick={() => setTutorial(false)}>
+              Finish
             </button>
           )}
         </div>
