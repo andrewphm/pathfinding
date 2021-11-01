@@ -101,15 +101,25 @@ code {
     monospace;
 }
 
+/* ========== Main ========== */
+#main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+  justify-content: space-between;
+}
+
+/* ========== HEADER ========= */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4rem;
+  padding: 0 5rem;
   row-gap: 1rem;
   background-color: var(--clr-primary-2);
   color: white;
-  height: 5rem;
+  flex-wrap: wrap;
 }
 
 .title-icon {
@@ -138,37 +148,35 @@ header {
 
 .links a {
   margin-left: 1rem;
-  font-size: 1.2rem;
-  color: var(--clr-grey-9);
+  font-size: 1rem;
+}
+
+.links a:hover {
+  color: var(--clr-highlight);
 }
 
 nav {
   display: flex;
 }
 
-/* ========== Main ========== */
-#main {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0;
-  justify-content: space-between;
-}
-
 /* ========== Grid Buttons ========== */
 .btn {
-  background-color: var(--clr-primary-4);
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.9rem;
   cursor: pointer;
-  font-size: 1rem;
-  border-color: transparent;
-  transition: var(--transition);
+  font-size: 0.9rem;
+  font-family: "Averta";
   font-weight: 600;
+  border-color: transparent;
+  border-style: none;
+  border-width: unset;
+  border-color: transparent;
+  margin: 0.5rem;
   margin-right: 1rem;
 }
 .btn:hover {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  transform: scale(0.96);
 }
 .algo-icon {
   vertical-align: -5px;
@@ -178,7 +186,24 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  flex-wrap: wrap;
+}
+
+/* Visualize button */
+.visualize-btn {
+  border-radius: 5px;
+  background-color: var(--clr-primary-4);
+}
+
+/* Clear button */
+.clear-btn {
+  border-radius: 5px;
+  background-color: var(--clr-target);
+}
+/* Clear Path button */
+.clear-path-btn {
+  border-radius: 5px;
+  background-color: var(--clr-orange-7);
 }
 
 .choose-algo {
@@ -186,11 +211,11 @@ nav {
   border-width: unset;
   border-color: transparent;
   background-color: transparent;
-  height: 100%;
   color: white;
   font-size: 1rem;
-  font-family: "Averta-bold";
+  font-family: "Averta";
   cursor: pointer;
+  margin-right: 1.5rem;
 }
 
 .choose-algo:hover {
@@ -203,7 +228,7 @@ nav {
   margin-top: 1.5rem;
   border-radius: 5px;
   z-index: 10;
-  background-color: var(--clr-primary-4);
+  background-color: var(--clr-primary-2);
   transition: var(--transition);
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 0.5rem 0;
@@ -216,23 +241,20 @@ nav {
 }
 .algo-list li:hover {
   background-color: var(--clr-primary-3);
+  color: var(--clr-highlight);
 }
 .show-menu {
   display: block;
 }
 
-/* Visualize button */
-.visualize-btn {
-  border-radius: 5px;
-  background-color: var(--clr-orange-6);
-}
-/* Clear button */
-.clear-btn {
-  border-radius: 5px;
-  background-color: var(--clr-target);
+/* ========== Grid ========== */
+/* Algorithm Description */
+.algo-description {
+  margin: 2rem auto;
+  text-align: center;
 }
 
-/* ========== Grid Legend ========== */
+/* Grid Legend */
 .legend-container {
   margin: 0 auto;
   width: 80%;
@@ -299,10 +321,10 @@ nav {
 .grid-container {
   display: flex;
   flex-direction: column;
-  margin: 5rem auto 0;
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 10px;
 }
 #grid {
   padding: 1px;
@@ -319,7 +341,7 @@ nav {
 
 /* Node */
 .grid-item {
-  border: 1px solid var(--clr-primary-7);
+  border: 1px solid var(--clr-primary-8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -358,4 +380,28 @@ svg {
 }
 .shortest {
   background-color: yellow;
+}
+
+/* ======= MEDIA QUERIES ======= */
+
+@media screen and (min-width: 1600px) {
+  .grid-container {
+    padding: 10px 150px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .grid-container {
+    padding: 10px 100px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .grid-container {
+    padding: 10px 80px;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .grid-container {
+    padding: 10px 50px;
+  }
 }

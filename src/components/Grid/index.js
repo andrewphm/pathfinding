@@ -19,6 +19,18 @@ const Grid = ({ state, dispatch }) => {
     getGridSize: getGridSize,
     getNodeObject: getNodeObject,
   };
+
+  const algorithmDescription = (algo) => {
+    if (algo === "Breadth-first Search") {
+      return (
+        <p>
+          Breath-first Search is <strong>unweighted</strong> and
+          <strong> guarantees </strong>the shortest path!
+        </p>
+      );
+    }
+  };
+
   return (
     <section
       onClick={() => {
@@ -29,6 +41,7 @@ const Grid = ({ state, dispatch }) => {
       }}
       className="grid-container"
     >
+      <div className="algo-description">{algorithmDescription(state.algo)}</div>
       <div className="legend-container">
         <ul className="legend">
           <li>

@@ -1,12 +1,36 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 
 import Header from "./Header";
 import Grid from "./Grid/";
 
 import { reducer } from "./reducer";
 const Home = () => {
-  let row = 20;
-  let col = 40;
+  // Detect width
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const checkSize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  window.addEventListener("resize", checkSize);
+
+  let row = 0;
+  let col = 0;
+  if (windowWidth > 1600) {
+    row = 25;
+    col = 50;
+  } else if (windowWidth > 1200) {
+    row = 20;
+    col = 40;
+  } else if (windowWidth > 1080) {
+    row = 20;
+    col = 35;
+  } else if (windowWidth > 768) {
+    row = 18;
+    col = 29;
+  } else if (windowWidth > 320) {
+    row = 15;
+    col = 20;
+  }
 
   // Set properties of CSS variable grid row/col
   let root = document.getElementById("root");

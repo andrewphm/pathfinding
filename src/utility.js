@@ -11,6 +11,17 @@ export const clearWalls = (row, col, dispatch) => {
     }
   }
 };
+export const clearPath = (row, col, dispatch) => {
+  dispatch({ type: "IS_FINISHED", payload: false });
+  for (let x = 0; x < row; x++) {
+    for (let y = 0; y < col; y++) {
+      let node = document.getElementById(`node-${x}-${y}`);
+      node.classList.remove("visited");
+      node.classList.remove("queue");
+      node.classList.remove("shortest");
+    }
+  }
+};
 
 /* Mouse event handlers */
 // Drawing walls

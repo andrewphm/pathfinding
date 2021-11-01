@@ -6,6 +6,7 @@ import {
   clearWalls,
   getGridSize,
   getNodeObject,
+  clearPath,
 } from "../utility";
 
 // Algorithms
@@ -72,7 +73,7 @@ const Header = ({ dispatch, state, row, col }) => {
             onClick={() => handleVirtualize(state, dispatch)}
             className="btn visualize-btn"
           >
-            Visualize {state.algo}
+            Visualize {state.algo}!
           </button>
         </li>
         <li>
@@ -83,6 +84,16 @@ const Header = ({ dispatch, state, row, col }) => {
             }}
           >
             Clear Walls
+          </button>
+        </li>
+        <li>
+          <button
+            className="clear-path-btn btn"
+            onClick={() => {
+              clearPath(row, col, dispatch);
+            }}
+          >
+            Clear Path
           </button>
         </li>
       </ul>
