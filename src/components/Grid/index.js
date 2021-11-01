@@ -79,7 +79,7 @@ const Grid = ({ state, dispatch }) => {
         onMouseOver={(event) => {
           handleMouseEnter(event.target, state, dispatch, algorithmObj);
         }}
-        onMouseUp={() => handleMouseUp(dispatch, state)}
+        onMouseUp={(event) => handleMouseUp(event.target, dispatch, state)}
       >
         {state.nodes.map((e, index) => {
           const { row, col } = e;

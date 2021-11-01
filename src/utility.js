@@ -37,7 +37,7 @@ export const handleMouseDown = (target, dispatch) => {
     dispatch({ type: "MOVING_TARGET", payload: true });
 };
 
-export const handleMouseUp = (dispatch, state) => {
+export const handleMouseUp = (target, dispatch, state) => {
   if (state.isMouseDown) dispatch({ type: "BUILDING_WALL", payload: false });
   if (state.isMovingStart) dispatch({ type: "MOVING_START", payload: false });
   if (state.isMovingTarget) dispatch({ type: "MOVING_TARGET", payload: false });
