@@ -3,7 +3,6 @@ import React, { useReducer, useState } from "react";
 // Import components
 import Header from "./Header";
 import Grid from "./Grid/";
-import Tutorial from "./Tutorial";
 
 import { reducer } from "./reducer";
 const Home = () => {
@@ -73,11 +72,9 @@ const Home = () => {
 
   // Create useReducer hook to manage node/grid state. Set up state for algorithm chosen
   const [state, dispatch] = useReducer(reducer, initialGridArr(row, col));
-  const [tutorial, setTutorial] = useState(true);
 
   return (
     <>
-      {tutorial && <Tutorial tutorial={tutorial} setTutorial={setTutorial} />}
       <Header state={state} row={row} col={col} dispatch={dispatch} />
       <Grid state={state} dispatch={dispatch} />
     </>
