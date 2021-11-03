@@ -123,7 +123,7 @@ code {
   position: relative;
   width: 90%;
   height: 90%;
-  max-height: 650px;
+  max-height: 700px;
   max-width: 800px;
   background-color: var(--clr-grey-10);
   margin: auto;
@@ -135,7 +135,6 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: var(--clr-primary-2);
 }
 
 .close-tutorial {
@@ -204,7 +203,7 @@ code {
 
 /* Slide */
 .slide {
-  height: 90%;
+  height: 85%;
   width: 90%;
   text-align: center;
   display: flex;
@@ -213,12 +212,15 @@ code {
   flex-direction: column;
   align-items: center;
   row-gap: 2rem;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .slide h1 {
-  font-size: 2rem;
+  font-size: clamp(1.1rem, 7vw, 2rem);
+  font-family: "Averta-bold";
 }
 .slide h2 {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
 }
 .slide p {
   line-height: 1.5;
@@ -233,15 +235,18 @@ code {
   height: 90%;
   width: 90%;
   max-width: 250px;
+  background-position: center top;
+  min-width: 180px;
 }
 
 .slide-img-2 {
   background-image: url(./assets/worldwide-gps-svgrepo-com.svg);
   background-repeat: no-repeat;
-  background-position: center;
   height: 90%;
   width: 90%;
+  min-width: 180px;
   max-width: 250px;
+  background-position: center top;
 }
 
 .image-wrapper {
@@ -578,12 +583,6 @@ svg {
   .slide {
     height: 95%;
     width: 95%;
-  }
-  .slide h1 {
-    font-size: 1.2rem;
-  }
-  .slide h2 {
-    font-size: 1rem;
   }
   .slide p {
     font-size: 0.9rem;
